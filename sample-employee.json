@@ -1,0 +1,16 @@
+{
+  "employeeCode": "EMP-00001",
+  "firstName": "Amit",
+  "lastName": "Sharma",
+  "email": "amit.sharma@example.com",
+  "phone": "+91-9876543210",
+  "jobTitle": "Senior Java Developer",
+  "department": "Engineering",
+  "employmentType": "FULL_TIME",
+  "status": "ACTIVE",
+  "hireDate": "2025-04-15",
+  "location": "Bengaluru",
+  "managerName": "Priya Singh",
+  "skills": "Java, Spring Boot, PostgreSQL, Docker",
+  "salary": 95000
+}

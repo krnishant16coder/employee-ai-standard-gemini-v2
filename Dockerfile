@@ -1,19 +1,31 @@
-FROM node:20-alpine AS build
+# ==============================
+# Build stage
+# ==============================
+FROM maven:3.9-eclipse-temurin-17 AS build
 
 WORKDIR /app
 
-COPY package*.json ./
+# Copy Maven configuration
+COPY pom.xml .
 
-RUN npm install
+# Copy source code
+COPY src ./src
 
-COPY . .
+# Build Spring Boot application
+RUN mvn clean package -DskipTests
 
-RUN npm run build
+# ==============================
+# Runtime stage
+# ==============================
+FROM eclipse-temurin:17-jre
 
-FROM nginx:alpine
+WORKDIR /app
 
-COPY --from=build /app/dist /usr/share/nginx/html
+# Copy generated JAR
+COPY --from=build /app/target/*.jar app.jar
 
-EXPOSE 80
+# Render will provide the PORT environment variable.
+EXPOSE 8080
 
-CMD ["nginx", "-g", "daemon off."]
+# Start Spring Boot
+ENTRYPOINT ["java", "-jar", "app.jar"]
